@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- ==============================================
+    Header Section
+    =============================================== -->
+    <section class="login">
+        <div class="container">
+            <div class="banner-content">
+
+                <img src="{{ url_for('static', filename='assets/img/logo.png') }}" class="img-responsive"
+                     style="width:35% ">
+                <form method="post" class="form-signin">
+                    {{ form.hidden_tag() }}
+                    <h3 class="form-signin-heading">Please sign in</h3>
+                    <div class="form-group">
+{#                        {{ form.email.label(class="form-control-label") }}#}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control is-invalid", placeholder="Email") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control", placeholder="Email") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+{#                        {{ form.password.label(class="form-control-label") }}#}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control is-invalid", placeholder="Mot de passe") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control form-control", placeholder="Mot de passe") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input") }}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+                    {{ form.submit(class="kafe-btn kafe-btn-mint btn-block") }}
+                    {#                    <button class="" type="submit" name="subm">Sign in</button>#}
+                    <br/>
+                    <a class="btn btn-dark " href="{{ url_for('main.register') }}" role="button">Don't have an account
+                        yet? Register Here.</a>
+                    <a class="btn btn-dark " href="{{ url_for('main.register') }}" role="button">Forgot your
+                        password?</a>
+                </form>
+
+            </div><!--/. banner-content -->
+        </div><!-- /.container -->
+    </section>
+{% endblock content %}

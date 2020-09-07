@@ -1,0 +1,411 @@
+{% extends "homebase.html" %}
+{% block content %}
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== -->
+    <section class="profile-two">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <aside id="leftsidebar" class="sidebar">
+                        <ul class="list">
+                            <li>
+                                <div class="user-info">
+                                    <div class="image">
+                                        <a href="photo_profile_two.html">
+                                            <img src="{{ url_for('static', filename='assets/img/users/' +  user.image_file) }}"
+                                                 class="img-responsive img-circle" alt="User">
+                                            <span class="online-status online"></span>
+                                        </a>
+                                    </div>
+                                    <div class="detail">
+                                        <h4>{{ user.prenom }} {{ user.nom }}</h4>
+                                        <small>@{{ user.username }}</small>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <a title="facebook" href="#" class=" waves-effect waves-block"><i
+                                                    class="fab fa-facebook"></i></a>
+                                            <a title="twitter" href="#" class=" waves-effect waves-block"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a title="instagram" href="#" class=" waves-effect waves-block"><i
+                                                    class="fab fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <small class="text-muted"><a href="photo_profile_two.html">320 Posts <em
+                                        class="fa fa-angle-right pull-right"></em></a> </small><br/>
+                                <small class="text-muted"><a href="photo_followers.html">2456 Followers <em
+                                        class="fa fa-angle-right pull-right"></em></a> </small><br/>
+                                <small class="text-muted"><a href="photo_followers.html">456 Following <em
+                                        class="fa fa-angle-right pull-right"></em></a> </small>
+                                <hr>
+                                <small class="text-muted">Bio: </small>
+                                <p>795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
+                                <hr>
+                                <small class="text-muted">Website: </small>
+                                <p>http://www.themashabrand.com </p>
+                                <hr>
+                            </li>
+                            <li>
+                                <form method="POST" action="" enctype="multipart/form-data">
+                                    {{ form.hidden_tag() }}
+                                    <div class="box-footer clearfix">
+                                        <small class="text-muted">MIS A JOUR PHOTO DE PROFIL</small>
+                                        {#                                {{ form.picture(class="form-control-file pull-left") }}#}
+                                        <input type="file" class="form-control-file pull-left" name="picture">
+                                        {% if form.picture.errors %}
+                                            {% for error in form.picture.errors %}
+                                                <span class="text-danger">{{ error }}</span></br>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {#                                <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm">Upload</button>#}
+                                        {{ form.submit(class="kafe-btn kafe-btn-mint-small pull-right btn-sm") }}
+                                        <ul class="nav nav-pills nav-sm">
+
+                                            <li class="nav-item"><a class="nav-link" href=""><i
+                                                    class="fa fa-camera text-muted"></i></a>
+                                            </li>
+                                            <li class="nav-item"><a class="nav-link" href=""><i
+                                                    class="fa fa-video text-muted"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </aside>
+                </div><!--/ col-lg-3-->
+
+                <div class="col-lg-6" style="background: #fff;">
+                    {% for i in range(0,posts|length, 2) %}
+
+                        <div class="row">
+                            {% if posts[i] %}
+                                <div class="col-lg-6">
+                                    <a href="#myModal{{ i }}" data-toggle="modal">
+                                        <div class="explorebox"
+                                             style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url({{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}) no-repeat;
+                                                     background-size: cover;
+                                                     background-position: center center;
+                                                     -webkit-background-size: cover;
+                                                     -moz-background-size: cover;
+                                                     -o-background-size: cover;">
+                                            <div class="explore-top">
+                                                <div class="explore-like"><i class="fa fa-heart"></i>
+                                                    <span>{{ loadLikes(posts[i].id)|length }}</span>
+                                                </div>
+                                                <div class="explore-circle pull-right"><i class="far fa-bookmark"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            {% if posts[i+ 1] %}
+                                <div class="col-lg-6">
+                                    <a href="#myModal" data-toggle="modal">
+                                        <div class="explorebox"
+                                             style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url({{ url_for('static', filename='assets/img/posts/' + posts[i+ 1].image_file) }}) no-repeat;
+                                                     background-size: cover;
+                                                     background-position: center center;
+                                                     -webkit-background-size: cover;
+                                                     -moz-background-size: cover;
+                                                     -o-background-size: cover;">
+                                            <div class="explore-top">
+                                                <div class="explore-like"><i class="fa fa-heart"></i>
+                                                    <span>{{ loadLikes(posts[i+ 1].id)|length }}</span>
+                                                </div>
+                                                <div class="explore-circle pull-right"><i class="far fa-bookmark"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                    <!--/ row -->
+
+                    {#                    <div class="row">#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/32.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>12</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/30.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>1499</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div><!--/ row -->#}
+                    {##}
+                    {#                    <div class="row">#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/19.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>1742</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/8.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>1269</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div><!--/ row -->#}
+                    {##}
+                    {#                    <div class="row">#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/36.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>12456</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                        <div class="col-lg-6">#}
+                    {#                            <a href="#myModal" data-toggle="modal">#}
+                    {#                                <div class="explorebox"#}
+                    {#                                     style="background: linear-gradient( rgba(34,34,34,0.2), rgba(34,34,34,0.2)), url('assets/img/posts/25.jpg') no-repeat;#}
+                    {#					  background-size: cover;#}
+                    {#					  background-position: center center;#}
+                    {#					  -webkit-background-size: cover;#}
+                    {#					  -moz-background-size: cover;#}
+                    {#					  -o-background-size: cover;">#}
+                    {#                                    <div class="explore-top">#}
+                    {#                                        <div class="explore-like"><i class="fa fa-heart"></i> <span>10945</span></div>#}
+                    {#                                        <div class="explore-circle pull-right"><i class="far fa-bookmark"></i></div>#}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {#                            </a>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div><!--/ row -->#}
+
+                </div>
+                <div class="col-lg-3">
+
+                    <div class="suggestion-box full-width">
+                        <div class="suggestions-list">
+                            {% for i in range(0, 6) %}
+                                <div class="suggestion-body">
+                                    <img class="img-responsive img-circle"
+                                         src="{{ url_for('static', filename='assets/img/users/' +  utilsateurs[i].image_file) }}"
+                                         alt="Image">
+                                    <div class="name-box">
+                                        <h4>{{ utilsateurs[i].prenom }} {{ utilsateurs[i].nom }}</h4>
+                                        <span>@{{ utilsateurs[i].username }}</span>
+                                    </div>
+                                    <span><i class="fa fa-plus"></i></span>
+                                </div>
+                            {% endfor %}
+                        </div><!--suggestions-list end-->
+                    </div>
+
+                    <div class="trending-box">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Trending Photos</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trending-box">
+                        {% for i in range(0,6,2) %}
+                            <div class="row">
+                                {% if posts[i] %}
+                                    <div class="col-lg-6">
+                                        <a href="#"><img
+                                                src="{{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}"
+                                                class="img-responsive" alt="Image"/></a>
+                                    </div>
+                                {% endif %}
+                                {% if posts[i+ 1] %}
+                                    <div class="col-lg-6">
+                                        <a href="#"><img
+                                                src="{{ url_for('static', filename='assets/img/posts/' + posts[i+ 1].image_file) }}"
+                                                class="img-responsive" alt="Image"/></a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+
+            </div><!--/ row-->
+        </div><!--/ container -->
+    </section><!--/ profile -->
+
+    <!-- ==============================================
+    Modal Section
+    =============================================== -->
+    {% for i in range(0,posts|length) %}
+        {% set comments = loadComments(posts[i].id) %}
+
+        <div id="myModal{{ i }}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-8 modal-image">
+                                <img class="img-responsive"
+                                     src="{{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}"
+                                     alt="Image"/>
+                            </div><!--/ col-md-8 -->
+                            <div class="col-md-4 modal-meta">
+                                <div class="modal-meta-top">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                                    </button><!--/ button -->
+                                    <div class="img-poster clearfix">
+                                        <a href=""><img class="img-responsive img-circle"
+                                                        src="{{ url_for('static', filename='assets/img/users/' + posts[i].author.image_file) }}"
+                                                        alt="Image"/></a>
+                                        <strong><a
+                                                href="">{{ posts[i].author.prenom }} {{ posts[i].author.nom }}</a></strong>
+                                        <span>12 minutes ago</span><br/>
+                                        <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i>
+                                            Following</a>
+                                    </div><!--/ img-poster -->
+
+                                    <ul class="img-comment-list">
+                                        {% for j in range(0,comments|length) %}
+                                            <li>
+                                                <div class="comment-img">
+                                                    <img src="{{ url_for('static', filename='assets/img/users/' + comments[j].author.image_file) }}"
+                                                         class="img-responsive img-circle"
+                                                         alt="Image"/>
+                                                </div>
+                                                <div class="comment-text">
+                                                    <strong><a
+                                                            href="">{{ comments[j].author.prenom }} {{ comments[j].author.nom }}</a></strong>
+                                                    <p>{{ comments[j].content }}</p> <span
+                                                        class="date sub-text">{{ comments[j].date }}</span>
+                                                </div>
+                                            </li>
+                                        {% endfor %}<!--/ li -->
+                                    </ul><!--/ comment-list -->
+
+                                    <div class="modal-meta-bottom">
+                                        <ul>
+                                            <li><a class="modal-like" href="#"><i class="fa fa-heart"></i></a><span
+                                                    class="modal-one"> {{ loadLikes(posts[i].id)|length }}</span> |
+                                                <a class="modal-comment" href="#"><i
+                                                        class="fa fa-comments"></i></a><span>{{ comments|length }}</span>
+                                            </li>
+                                            <form method="POST" action="">
+                                                {{ formComment.hidden_tag() }}
+                                                <li>
+			   <span class="thumb-xs">
+				<img class="img-responsive img-circle"
+                     src="{{ url_for('static', filename='assets/img/users/' + user.image_file) }}" alt="Image">
+			   </span>
+                                                    <div class="comment-body">
+                                                        {{ formComment.content(class="form-control input-sm", placeholder="Write your comment...") }}
+                                                        {{ formComment.post(class="form-control input-sm hidden", value=posts[i].id) }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                                <li>
+                                                    <div class="comment-body">
+                                                        {{ formComment.submit(class="btn btn-outline-succes fa") }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                            </form>
+                                            <form method="POST" action="">
+                                                {{ formLike.hidden_tag() }}
+                                                <li>
+                                            <br><br>
+                                                    <div class="comment-body">
+                                                        {{ formLike.post(class="form-control input-sm hidden", value=posts[i].id) }}
+                                                        {{ formLike.submit(class="btn btn-outline-succes fa") }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </div><!--/ modal-meta-bottom -->
+
+                                </div><!--/ modal-meta-top -->
+                            </div><!--/ col-md-4 -->
+
+                        </div><!--/ row -->
+                    </div><!--/ modal-body -->
+
+                </div><!--/ modal-content -->
+            </div><!--/ modal-dialog -->
+        </div><!--/ modal -->
+    {% endfor %}
+
+
+    <!-- ==============================================
+    Scripts
+    =============================================== -->
+{% endblock %}

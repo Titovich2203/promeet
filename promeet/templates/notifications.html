@@ -1,0 +1,47 @@
+{% extends "homebase.html" %}
+{% block content %}
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== -->
+    <section class="notifications">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-lg-offset-2">
+                    <ul>
+
+                        {% for i in range(0,notifications|length) %}
+                            <li>
+                                <div class="media first_child">
+                                    <div class="img-responsive img-circle" style="padding: 10px">
+                                        {% if notifications[i].type == 'LIKE' %}
+                                            <i class="fa fa-heart text-danger" style="font-size: 50px"></i>
+                                        {% else %}
+                                            <i class="fa fa-comment text-info" style="font-size: 50px"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="media_body">
+                                        <p><b>{{ notifications[i].content }}</b></p>
+                                        <h6>{{ i* 3 }} minutes ago</h6>
+                                        {#                                    <div class="btn_group">#}
+                                        {#                                        <a class="kafe-btn kafe-btn-mint"><i class="fa fa-check"></i></a>#}
+                                        {#                                        <a class="kafe-btn kafe-btn-red"><i class="fa fa-times"></i></a>#}
+                                        {#                                    </div>#}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div><!--/ row-->
+        </div><!--/ container -->
+    </section><!--/ profile -->
+
+    <!-- ==============================================
+    Scripts
+    =============================================== -->
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "homebase.html" %}
+{% block content %}
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== -->
+    <section class="upload">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div class="box">
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control no-border is-invalid", rows="8",
+                                      placeholder="Titre du post") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control no-border",
+                                      placeholder="Titre du post") }}
+                            {% endif %}
+                            {% if form.content.errors %}
+                                {{ form.content(class="form-control no-border is-invalid", rows="8",
+                                      placeholder="Type something...") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.content.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.content(class="form-control no-border", rows="8",
+                                      placeholder="Type something...") }}
+                            {% endif %}
+                            <div class="box-footer clearfix">
+                                {#                                {{ form.picture(class="form-control-file pull-left") }}#}
+                                <input type="file" class="form-control-file pull-left" name="picture">
+                                {% if form.picture.errors %}
+                                    {% for error in form.picture.errors %}
+                                        <span class="text-danger">{{ error }}</span></br>
+                                    {% endfor %}
+                                {% endif %}
+                                {#                                <button class="kafe-btn kafe-btn-mint-small pull-right btn-sm">Upload</button>#}
+                                {{ form.submit(class="kafe-btn kafe-btn-mint-small pull-right btn-sm") }}
+                                <ul class="nav nav-pills nav-sm">
+
+                                    <li class="nav-item"><a class="nav-link" href=""><i
+                                            class="fa fa-camera text-muted"></i></a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href=""><i
+                                            class="fa fa-video text-muted"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
+            <div class="row one-row">
+                <div class="col-lg-12">
+                    <a href="https://picturepan2.github.io/instagram.css/" target="_blank"><h4>Instagram Filters from
+                        Picture Pan 2</h4></a>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span>Normal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-1977">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">1977</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-willow">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Willow</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!--/ row-->
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-sutro">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Sutro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-reyes">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Reyes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-poprocket">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Poprocket</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!--/ row-->
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-inkwell">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Inkwell</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-nashville">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Nashville</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-image filter-moon">
+                            <img src="{{ url_for('static', filename='assets/img/posts/bureau.jpg') }}" class="img-responsive" alt="Image"/>
+                        </div>
+                        <div class="card-header">
+                            <span class="h6">Moon</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!--/ row-->
+
+
+        </div><!--/ container -->
+    </section><!--/ newsfeed -->
+    <!-- ==============================================
+    Scripts
+    =============================================== -->
+
+{% endblock %}

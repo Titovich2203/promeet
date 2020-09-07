@@ -1,0 +1,81 @@
+{% extends "homebase.html" %}
+{% block content %}
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== -->
+    <section class="stories">
+        <div class="container">
+            <div class="row">
+
+                {% for i in range(0,posts|length, 3) %}
+                    {% if posts[i] %}
+                        <div class="col-lg-4">
+                            <a href="#">
+                                <div class="storybox"
+                                     style="background: linear-gradient( rgba(34,34,34,0.78), rgba(34,34,34,0.78)), url({{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}) no-repeat;
+		          background-size: cover;
+                  background-position: center center;
+                  -webkit-background-size: cover;
+                  -moz-background-size: cover;
+                  -o-background-size: cover;">
+                                    <div class="story-body text-center">
+                                        <div class=""><img class="img-circle" src="{{ url_for('static', filename='assets/img/users/' + posts[i].author.image_file) }}" alt="user">
+                                        </div>
+                                        <h4>{{ posts[i].author.prenom }} {{ posts[i].author.nom }}</h4>
+                                        <p>2 hours ago</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if posts[i+ 1] %}
+                        <div class="col-lg-4">
+                            <a href="#">
+                                <div class="storybox"
+                                     style="background: linear-gradient( rgba(34,34,34,0.78), rgba(34,34,34,0.78)), url({{ url_for('static', filename='assets/img/posts/' + posts[i+ 1].image_file) }}) no-repeat;
+		          background-size: cover;
+                  background-position: center center;
+                  -webkit-background-size: cover;
+                  -moz-background-size: cover;
+                  -o-background-size: cover;">
+                                    <div class="story-body text-center">
+                                        <div class=""><img class="img-circle" src="{{ url_for('static', filename='assets/img/users/' + posts[i+ 1].author.image_file) }}" alt="user">
+                                        </div>
+                                        <h4>{{ posts[i+ 1].author.prenom }} {{ posts[i+ 1].author.nom }}</h4>
+                                        <p>4 hours ago</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if posts[i+ 2] %}
+                        <div class="col-lg-4">
+                            <a href="#">
+                                <div class="storybox"
+                                     style="background: linear-gradient( rgba(34,34,34,0.78), rgba(34,34,34,0.78)), url({{ url_for('static', filename='assets/img/posts/' + posts[i+ 2].image_file) }}) no-repeat;
+		          background-size: cover;
+                  background-position: center center;
+                  -webkit-background-size: cover;
+                  -moz-background-size: cover;
+                  -o-background-size: cover;">
+                                    <div class="story-body text-center">
+                                        <div class=""><img class="img-circle" src="{{ url_for('static', filename='assets/img/users/' + posts[i+ 2].author.image_file) }}" alt="user">
+                                        </div>
+                                        <h4>{{ posts[i+ 2].author.prenom }} {{ posts[i+ 2].author.nom }}</h4>
+                                        <p>5 hours ago</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div><!--/ container -->
+    </section><!--/ newsfeed -->
+    <!-- ==============================================
+    Scripts
+    =============================================== -->
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends "homebase.html" %}
+{% block content %}
+
+    <!-- ==============================================
+    Navigation Section
+    =============================================== -->
+
+    <!-- ==============================================
+    News Feed Section
+    =============================================== -->
+    <section class="newsfeed">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    {% for i in range(1,5) %}
+                        {% if utilsateurs[i] %}
+                            <a href="#">
+                                <div class="storybox"
+                                     style="background: linear-gradient( rgba(34,34,34,0.78), rgba(34,34,34,0.78)), url({{ url_for('static', filename='assets/img/bg/bg'+i|string+'.jpg') }}) no-repeat;
+                                             background-size: cover;
+                                             background-position: center center;
+                                             -webkit-background-size: cover;
+                                             -moz-background-size: cover;
+                                             -o-background-size: cover;">
+                                    <div class="story-body text-center">
+                                        <div class=""><img class="img-circle"
+                                                           src="{{ url_for('static', filename='assets/img/users/' +  utilsateurs[i].image_file) }}"
+                                                           alt="user"></div>
+                                        <h4>{{ utilsateurs[i].prenom }} {{ utilsateurs[i].nom }}</h4>
+                                        <p>{{ i }} hours ago</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="trending-box hidden-xs hidden-md">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="photo_stories.html"><h4>More stories</h4></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!--/ col-lg-3 -->
+                <div class="col-lg-6">
+
+                    {% for i in range(0,posts|length) %}
+                        <div class="cardbox">
+
+                            <div class="cardbox-heading">
+                                <!-- START dropdown-->
+                                <div class="dropdown pull-right">
+                                    <button class="btn btn-secondary btn-flat btn-flat-icon" type="button"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                        <em class="fa fa-ellipsis-h"></em>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu"
+                                         style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a class="dropdown-item" href="#">Hide post</a>
+                                        <a class="dropdown-item" href="#">Stop following</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div><!--/ dropdown -->
+                                <!-- END dropdown-->
+                                <div class="media m-0">
+                                    <div class="d-flex mr-3">
+                                        <a href="#"><img class="img-responsive img-circle"
+                                                         src="{{ url_for('static', filename='assets/img/users/' + posts[i].author.image_file) }}"
+                                                         alt="User"></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="m-0">{{ posts[i].author.prenom }} {{ posts[i].author.nom }}</p>
+                                        <small><span>10 hours ago</span></small>
+                                    </div>
+                                </div><!--/ media -->
+                            </div><!--/ cardbox-heading -->
+
+                            <div class="cardbox-item text-center">
+                                <h3 class="text-info">
+                                    {{ posts[i].title }}
+                                </h3>
+                                <hr>
+                                <a href="#myModal{{ i }}" class="text-center" data-toggle="modal">
+                                    <img class="img-responsive center"
+                                         src="{{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}"
+                                         alt="MaterialImg">
+                                </a>
+                                <hr>
+                                <h5>
+                                    <small class="text-muted">{{ posts[i].content }}</small>
+                                </h5>
+                                <hr>
+                            </div><!--/ cardbox-item -->
+                            <div class="cardbox-like">
+                                <ul>
+                                    <li><a href="#"><i
+                                            class="fa fa-heart"></i></a><span>{{ loadLikes(posts[i].id)|length }}</span>
+                                    </li>
+                                    <li><a href="#" title="" class="com"><i class="fa fa-comments"></i></a> <span
+                                            class="span-last"> {{ loadComments(posts[i].id)|length }}</span></li>
+                                </ul>
+                            </div><!--/ cardbox-like -->
+
+                        </div>
+
+                    {% endfor %}
+                </div><!--/ col-lg-6 -->
+                <div class="col-lg-3">
+
+                    <div class="suggestion-box full-width">
+                        <div class="suggestions-list">
+                            {#                            {{ utilsateurs[0] }}#}
+                            {% for i in range(0, 6) %}
+                                <div class="suggestion-body">
+                                    <img class="img-responsive img-circle"
+                                         src="{{ url_for('static', filename='assets/img/users/' +  utilsateurs[i].image_file) }}"
+                                         alt="Image">
+                                    <div class="name-box">
+                                        <h4>{{ utilsateurs[i].prenom }} {{ utilsateurs[i].nom }}</h4>
+                                        <span>@{{ utilsateurs[i].username }}</span>
+                                    </div>
+                                    <span><i class="fa fa-plus"></i></span>
+                                </div>
+                            {% endfor %}
+
+                        </div><!--suggestions-list end-->
+                    </div>
+
+                    <div class="trending-box">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4>Trending Photos</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trending-box">
+                        {% for i in range(0,6,2) %}
+                            <div class="row">
+                                {% if posts[i] %}
+                                    <div class="col-lg-6">
+                                        <a href="#"><img
+                                                src="{{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}"
+                                                class="img-responsive" alt="Image"/></a>
+                                    </div>
+                                {% endif %}
+                                {% if posts[i+ 1] %}
+                                    <div class="col-lg-6">
+                                        <a href="#"><img
+                                                src="{{ url_for('static', filename='assets/img/posts/' + posts[i+ 1].image_file) }}"
+                                                class="img-responsive" alt="Image"/></a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+
+            </div><!--/ row -->
+        </div><!--/ container -->
+    </section><!--/ newsfeed -->
+
+    <!-- ==============================================
+    Modal Section
+    =============================================== -->
+    {% for i in range(0,posts|length) %}
+        {% set comments = loadComments(posts[i].id) %}
+
+        <div id="myModal{{ i }}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-8 modal-image">
+                                <img class="img-responsive"
+                                     src="{{ url_for('static', filename='assets/img/posts/' + posts[i].image_file) }}"
+                                     alt="Image"/>
+                            </div><!--/ col-md-8 -->
+                            <div class="col-md-4 modal-meta">
+                                <div class="modal-meta-top">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                                    </button><!--/ button -->
+                                    <div class="img-poster clearfix">
+                                        <a href=""><img class="img-responsive img-circle"
+                                                        src="{{ url_for('static', filename='assets/img/users/' + posts[i].author.image_file) }}"
+                                                        alt="Image"/></a>
+                                        <strong><a
+                                                href="">{{ posts[i].author.prenom }} {{ posts[i].author.nom }}</a></strong>
+                                        <span>12 minutes ago</span><br/>
+                                        <a href="" class="kafe kafe-btn-mint-small"><i class="fa fa-check-square"></i>
+                                            Following</a>
+                                    </div><!--/ img-poster -->
+
+                                    <ul class="img-comment-list">
+                                        {% for j in range(0,comments|length) %}
+                                            <li>
+                                                <div class="comment-img">
+                                                    <img src="{{ url_for('static', filename='assets/img/users/' + comments[j].author.image_file) }}"
+                                                         class="img-responsive img-circle"
+                                                         alt="Image"/>
+                                                </div>
+                                                <div class="comment-text">
+                                                    <strong><a
+                                                            href="">{{ comments[j].author.prenom }} {{ comments[j].author.nom }}</a></strong>
+                                                    <p>{{ comments[j].content }}</p> <span
+                                                        class="date sub-text">{{ comments[j].date }}</span>
+                                                </div>
+                                            </li>
+                                        {% endfor %}<!--/ li -->
+                                    </ul><!--/ comment-list -->
+
+                                    <div class="modal-meta-bottom">
+                                        <ul>
+                                            <li><a class="modal-like" href="#"><i class="fa fa-heart"></i></a><span
+                                                    class="modal-one"> {{ loadLikes(posts[i].id)|length }}</span> |
+                                                <a class="modal-comment" href="#"><i
+                                                        class="fa fa-comments"></i></a><span>{{ comments|length }}</span>
+                                            </li>
+                                            <form method="POST" action="">
+                                                {{ formComment.hidden_tag() }}
+                                                <li>
+			   <span class="thumb-xs">
+				<img class="img-responsive img-circle"
+                     src="{{ url_for('static', filename='assets/img/users/' + user.image_file) }}" alt="Image">
+			   </span>
+                                                    <div class="comment-body">
+                                                        {{ formComment.content(class="form-control input-sm", placeholder="Write your comment...") }}
+                                                        {{ formComment.post(class="form-control input-sm hidden", value=posts[i].id) }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                                <li>
+                                                    <div class="comment-body">
+                                                        {{ formComment.submit(class="btn btn-outline-succes fa") }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                            </form>
+                                            <form method="POST" action="">
+                                                {{ formLike.hidden_tag() }}
+                                                <li>
+                                                    <br><br>
+                                                    <div class="comment-body">
+                                                        {{ formLike.post(class="form-control input-sm hidden", value=posts[i].id) }}
+                                                        {{ formLike.submit(class="btn btn-outline-succes fa") }}
+                                                    </div><!--/ comment-body -->
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </div><!--/ modal-meta-bottom -->
+
+                                </div><!--/ modal-meta-top -->
+                            </div><!--/ col-md-4 -->
+
+                        </div><!--/ row -->
+                    </div><!--/ modal-body -->
+
+                </div><!--/ modal-content -->
+            </div><!--/ modal-dialog -->
+        </div><!--/ modal -->
+    {% endfor %}
+
+    <!-- ==============================================
+    Scripts
+    =============================================== -->
+
+{% endblock content %}

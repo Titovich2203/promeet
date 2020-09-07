@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- ==============================================
+    Header Section
+    =============================================== -->
+    <section class="login">
+        <div class="container">
+            <div class="banner-content" style="margin-top: 30px;">
+
+                <img src="{{ url_for('static', filename='assets/img/logo.png') }}" class="img-responsive"
+                     style="width:30% ">
+                <form method="post" class="form-signin">
+                    {{ form.hidden_tag() }}
+                    <h3 class="form-signin-heading">Please register</h3>
+                    <div class="form-group">
+                        {#                        {{ form.nom.label(class="form-control-label") }}#}
+                        {% if form.nom.errors %}
+                            {{ form.nom(class="form-control form-control is-invalid", placeholder="Nom") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.nom.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.nom(class="form-control form-control", placeholder="Nom") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {#                        {{ form.nom.label(class="form-control-label") }}#}
+                        {% if form.prenom.errors %}
+                            {{ form.prenom(class="form-control form-control is-invalid", placeholder="Prenom") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.prenom.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.prenom(class="form-control form-control", placeholder="Prenom") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {#                        {{ form.email.label(class="form-control-label") }}#}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control is-invalid", placeholder="Email") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control", placeholder="Email") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {#                        {{ form.username.label(class="form-control-label") }}#}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control is-invalid", placeholder="Username") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control form-control", placeholder="Username") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+{#                        {{ form.password.label(class="form-control-label") }}#}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control is-invalid", placeholder="Mot de passe") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control form-control-lg", placeholder="Mot de passe") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+{#                        {{ form.confirm_password.label(class="form-control-label") }}#}
+                        {% if form.confirm_password.errors %}
+                            {{ form.confirm_password(class="form-control form-control is-invalid", placeholder="Confirmez le mot de passe") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.confirm_password(class="form-control form-control-lg", placeholder="Confirmez le mot de passe") }}
+                        {% endif %}
+                    </div>
+                    <button class="kafe-btn kafe-btn-mint btn-block" type="submit" name="subm">Sign Up</button>
+                    <br/>
+                    <a class="btn btn-dark " href="{{ url_for('main.login') }}" role="button">Already have an account?
+                        Click Here.</a>
+                    <a class="btn btn-dark " href="{{ url_for('main.login') }}" role="button">Forgot your password?</a>
+                </form>
+
+            </div><!--/. banner-content -->
+        </div><!-- /.container -->
+    </section>
+
+{% endblock content %}
